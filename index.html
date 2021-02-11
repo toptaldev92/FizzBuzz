@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+  <head>
+    <title>Fizz Buzz</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset = "UTF-8" />
+    <style>
+            
+      .centered {
+        margin:50px auto;
+        text-align:center;
+      }
+
+      .button::-moz-focus-inner{
+        border: 0;
+        padding: 0;
+      }
+
+      .button{
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        padding: 6px 20px;
+        margin: 0;
+        cursor: pointer;
+        border: 1px solid #bbb;
+        overflow: visible;
+        font: bold 13px arial, helvetica, sans-serif;
+        text-decoration: none;
+        white-space: nowrap;
+        color: #555;
+        
+        background-color: #ddd;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -o-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        
+        -webkit-transition: background-color .2s ease-out;
+        -moz-transition: background-color .2s ease-out;
+        -ms-transition: background-color .2s ease-out;
+        -o-transition: background-color .2s ease-out;
+        transition: background-color .2s ease-out;
+        background-clip: padding-box; /* Fix bleeding */
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        text-shadow: 0 1px 0 rgba(255,255,255, .9);
+        
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .button:hover{
+        background-color: #eee;
+        color: #555;
+      }
+
+      .button:active{
+        background: #e9e9e9;
+        position: relative;
+        top: 1px;
+        text-shadow: none;
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+      }
+
+      .button[disabled], .button[disabled]:hover, .button[disabled]:active{
+        border-color: #eaeaea;
+        background: #fafafa;
+        cursor: default;
+        position: static;
+        color: #999;
+        /* Usually, !important should be avoided but here it's really needed :) */
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      /* Colored buttons styles */
+
+      .button.green, .button.blue {
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0,0,0,.2);
+        
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.3)), to(rgba(255,255,255,0)));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -o-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+      }
+
+      /* */
+
+      .button.green{
+        background-color: #57a957;
+        border-color: #57a957;
+      }
+
+      .button.green:hover{
+        background-color: #62c462;
+      }
+
+      .button.green:active{
+        background: #57a957;
+      }
+
+      /* */
+
+      .button.blue{
+        background-color: #269CE9;
+        border-color: #269CE9;
+      }
+
+      .button.blue:hover{
+        background-color: #70B9E8;
+      }
+
+      .button.blue:active{
+        background: #269CE9;
+      }
+
+      /* */
+
+      .green[disabled], .green[disabled]:hover, .green[disabled]:active{
+        border-color: #57A957;
+        background: #57A957;
+        color: #D2FFD2;
+      }
+      .blue[disabled], .blue[disabled]:hover, .blue[disabled]:active{
+        border-color: #269CE9;
+        background: #269CE9;
+        color: #93D5FF;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function filter() {
+        var result = "";
+        let inputval1 = document.getElementById("myInputText").value;
+        if(inputval1[0]==="[" && inputval1[inputval1.length-1]==="]"){
+          inputval2 = inputval1.substr(1,inputval1.length-2);
+        }else{
+          inputval2 = inputval1.substr(0,inputval1.length);
+        }
+        let inputval = inputval2.split(',');
+        for (var i in inputval) {          
+          if (isNaN(inputval[i])) {
+            result = result + 'Invalid Item\n';
+            document.getElementById("myOutputArea").innerHTML = result;
+          } else {
+            if(inputval[i] % 3 === 0 && inputval[i] % 5 === 0) {
+              result = result + 'FizzBuzz\n';
+              document.getElementById("myOutputArea").innerHTML = result;
+            } else if (inputval[i] % 3 === 0) {
+              result = result + 'Fizz\n';
+              document.getElementById("myOutputArea").innerHTML = result;
+            } else if (inputval[i] % 5 === 0) {
+              result = result + 'Buzz\n';
+              document.getElementById("myOutputArea").innerHTML = result;
+            } else {
+              result = result + 'Divided ' + inputval[i] + ' by 3\n';
+              result = result + 'Divided ' + inputval[i] + ' by 5\n';
+              document.getElementById("myOutputArea").innerHTML = result;
+            }
+          }
+        }
+      }
+    </script>
+    
+    <h1 style = "text-align: center; color: Blue; font-size: 38px;">Welcome to Fizz Buzz</h1>
+    <form style = "max-width: 780px; margin: auto;">
+      <fieldset>
+        <legend style = "color:green; font-size: 30px;">Input Field</legend>
+        <p>
+          <label style = "font-size: 25px;">Input Array:</label>
+          <input type = "text"
+                 style = "font-size: 25px; width:600px;"
+                 id = "myInputText"
+                 cols = "50"
+                 placeholder = "Please type the input array here!" ></input>
+        </p>
+        
+        <p>
+          <label style = "font-size: 25px;">Output: </label>
+          <textarea id = "myOutputArea"
+                rows = "10"
+                style = "font-size: 25px; width:645px;"
+                placeholder = "Please click the 'Result button' to see the results!"></textarea>
+        </p>
+      </fieldset>
+      <br></br>
+      
+      <fieldset>
+        <legend style = "color:green; font-size: 30px;">Buttons to get actions</legend>
+        <p class="centered">
+          <button type = "button" style = "font-size: 25px;" class="small green button" onclick="filter()">
+            Result button
+          </button>
+          <button type = "button" style = "font-size: 25px;" class="small blue button" onclick="location.reload()">
+            Reset button
+          </button>
+        </p>       
+      </fieldset>
+      <br></br>
+
+      <fieldset>
+        <legend style = "color:green; font-size: 30px;">References</legend>
+        <p>
+          <label style = "font-size: 25px;">My Email</label> : <b><label style = "font-size: 25px;">toptaldev93@gmail.com</label></b>
+        </p>
+        <p>
+          <label style = "font-size: 25px;">My skype ID</label> : <b><label style = "font-size: 25px;">live:.cid.4bf696370b5ed4cd</label></b>
+        </p>
+        <p>  
+          <label style = "font-size: 25px;">My phone Number</label> : <b><label style = "font-size: 25px;">+1 832 278 2840</label></b>
+        </p>
+      </fieldset>
+    </form>    
+  </body>
+</html>
